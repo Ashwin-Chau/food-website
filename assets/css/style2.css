@@ -1,0 +1,685 @@
+/* food_items_view */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+.container {
+  max-width: 1400px; /* Increased from 1200px to 1400px */
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+.col-12 {
+  padding: 15px;
+}
+.col-12 {
+  width: 100%;
+}
+
+.col-12 h1 {
+  font-size: 55px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.col-12 h1 span {
+  color: #fac031;
+  margin-left: 15px;
+  font-family: "MV Boli", cursive;
+}
+
+.food .menu_box {
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 15px;
+}
+
+.food .menu_box .menu_card {
+  width: 325px;
+  height: 480px;
+  padding-top: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.food .menu_box .menu_card .menu_image {
+  width: 300px;
+  height: 245px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.food .menu_box .menu_card .menu_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: 0.3s;
+}
+
+.food .menu_box .menu_card .menu_image:hover img {
+  transform: scale(1.1);
+}
+
+.food .menu_box .menu_card .menu_info h2 {
+  width: 60%;
+  text-align: center;
+  margin: 10px auto 10px auto;
+  font-size: 25px;
+  color: #fac031;
+}
+
+.food .menu_box .menu_card .menu_info p {
+  text-align: center;
+  margin-top: 8px;
+  line-height: 21px;
+  font-size: 12px;
+  color: #2e2e2e;
+}
+
+.food .menu_box .menu_card .menu_info h3 {
+  text-align: center;
+  margin-top: 20px;
+  color: black;
+}
+
+/* .menu .menu_box .menu_card .menu_info .menu_icon{
+    color: #fac031;
+    text-align: center;
+    margin: 10px 0 10px 0;
+} */
+
+.food .menu_box .menu_card .menu_info .menu_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 600;
+  color: white;
+  background: #e78f38;
+  border: 2px solid #e78f38;
+  border-radius: 2rem;
+  padding: 8px 10px;
+  margin: 0 80px;
+  transition: 0.3s;
+  margin-top: 20px;
+}
+
+.food .menu_box .menu_card .menu_info .menu_btn:hover {
+  scale: 0.8;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 1rem 0;
+}
+
+
+/* carts */
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f7fa;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background-color: #2563eb;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.breadcrumb .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.breadcrumb h6 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: #dbeafe;
+    text-decoration: underline;
+}
+
+/* Cart Section */
+.cart-section {
+    padding: 3rem 0;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.cart-wrapper {
+    width: 100%;
+}
+
+.cart-content {
+    width: 100%;
+}
+
+/* Cart Header */
+.cart-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: #fff;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+    color: #1f2937;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.cart-col-package {
+    flex: 0 0 40%;
+    padding: 0 1rem;
+}
+
+.cart-col-price {
+    flex: 0 0 25%;
+    padding: 0 1rem;
+}
+
+.cart-col-month {
+    flex: 0 0 20%;
+    padding: 0 1rem;
+}
+
+.cart-col-remove {
+    flex: 0 0 15%;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Cart Item */
+.cart-item {
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s;
+}
+
+.cart-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item-row {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.cart-item h5 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin: 0;
+    color: #1f2937;
+}
+
+/* Month Input Group */
+.month-input-group {
+    display: flex;
+    align-items: center;
+    width: 140px;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s;
+}
+
+.month-input-group:focus-within {
+    border-color: #2563eb;
+}
+
+.month-btn, .increment-btn, .decrement-btn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.month-btn:hover, .increment-btn:hover, .decrement-btn:hover {
+    background: #1e40af;
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.month-btn:disabled, .increment-btn:disabled, .decrement-btn:disabled {
+    background: #d1d5db;
+    color: #6b7280;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.month-input, .input-quantity {
+    width: 60px;
+    text-align: center;
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    background: #fff;
+    height: 40px;
+    line-height: 1.5;
+    color: #1f2937;
+}
+
+.month-input:disabled, .input-quantity:disabled {
+    background: #f9fafb;
+    color: #6b7280;
+}
+
+/* Delete Button */
+.delete-btn {
+    background-color: #dc2626;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    height: 40px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #b91c1c;
+    transform: translateY(-1px);
+}
+
+.delete-btn i {
+    margin-right: 0.5rem;
+}
+
+/* Checkout Button */
+.cart-checkout {
+    text-align: right;
+    margin-top: 1.5rem;
+}
+
+.checkout-btn {
+    background-color: #2563eb;
+    border: none;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    display: inline-block;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.checkout-btn:hover {
+    background-color: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Empty Cart */
+.empty-cart {
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.empty-cart h4 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cart-header,
+    .cart-item-row {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    .cart-col-package,
+    .cart-col-price,
+    .cart-col-month,
+    .cart-col-remove {
+        flex: 0 0 100%;
+        margin-bottom: 1rem;
+        padding: 0;
+    }
+
+    .cart-col-remove {
+        justify-content: flex-start;
+    }
+
+    .cart-col-package h2,
+    .cart-col-price h2,
+    .cart-col-month h2,
+    .cart-col-remove h2 {
+        font-size: 1.125rem;
+    }
+
+    .cart-item h5 {
+        font-size: 1rem;
+    }
+
+    .month-input-group {
+        width: 100%;
+        max-width: 140px;
+        margin: 0 auto;
+    }
+
+    .delete-btn {
+        width: 100%;
+        max-width: 140px;
+        margin: 0 auto;
+    }
+
+    .cart-checkout {
+        text-align: center;
+    }
+
+    .checkout-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .month-input-group {
+        width: 120px;
+    }
+
+    .month-btn, .increment-btn, .decrement-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+
+    .month-input, .input-quantity {
+        width: 48px;
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .delete-btn {
+        max-width: 120px;
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* checkout */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background-color: #007bff;
+    padding: 1rem 0;
+}
+
+.breadcrumb .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.breadcrumb h6 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Checkout Section */
+.checkout-section {
+    padding: 3rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.checkout-wrapper {
+    width: 100%;
+}
+
+.checkout-content {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.checkout-details {
+    flex: 0 0 58.3333%;
+    padding: 0 15px;
+}
+
+.checkout-book-details {
+    flex: 0 0 41.6667%;
+    padding: 0 15px;
+}
+
+/* Form Styling */
+.details-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.form-group {
+    flex: 0 0 50%;
+    padding: 0 15px;
+    margin-bottom: 1rem;
+}
+
+.form-group.full-width {
+    flex: 0 0 100%;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.input-field, .select-field {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.input-field:focus, .select-field:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.text-danger {
+    color: #dc3545;
+    font-size: 0.875rem;
+}
+
+/* Notes Field Styling */
+.notes-field {
+    width: 100%;
+    min-height: 100px; /* Taller than standard inputs */
+    padding: 0.75rem; /* Slightly more padding */
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    background-color: #f9f9f9; /* Light background to indicate optional */
+    resize: vertical; /* Allow vertical resizing only */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.notes-field:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+.notes-field::placeholder {
+    color: #6c757d; /* Muted placeholder color */
+    font-style: italic;
+}
+
+.notes-field:hover {
+    border-color: #007bff;
+}
+
+/* Table Styling */
+.book-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.book-table th,
+.book-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.book-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.book-table td.align-middle {
+    vertical-align: middle;
+}
+
+/* Total Price */
+.total-price {
+    float: right;
+    font-weight: bold;
+}
+
+/* Submit Button */
+.checkout-action {
+    margin-top: 1rem;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .checkout-row {
+        flex-direction: column;
+    }
+
+    .checkout-details,
+    .checkout-book-details {
+        flex: 0 0 100%;
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        flex: 0 0 100%;
+    }
+
+    .notes-field {
+        min-height: 80px; /* Slightly shorter on smaller screens */
+    }
+}

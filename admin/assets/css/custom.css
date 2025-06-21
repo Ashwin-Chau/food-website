@@ -1,0 +1,38 @@
+/* 
+
+.content {
+    height: 25rem;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    
+    .content a {
+      text-decoration: none;
+      font-size: 30px;
+    }
+    
+    .content div {
+      display: flex;
+      
+    }
+    
+    .content div:hover {
+      font-weight: bold;
+    }
+    
+    .content a div {
+      width: 350px;
+      height: 200px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bottom-center { 
+      bottom: 0; 
+      left: 50%; 
+      transform: translateX(-50%); 
+  }  */
