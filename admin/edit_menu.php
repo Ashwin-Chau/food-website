@@ -52,7 +52,7 @@ include('includes/header.php');
 
                       <div class="col-md-12">
                         <label for="image" class="mb-0">Upload Food Image</label>
-                          <input type="file" name="image" class="form-control" id="foodImage" 
+                          <input type="file" name="image" class="form-control" id="menuImage" 
                             onblur="imageValidation('menuImage', 'menuImageErr', 'old_image')">
                           <span id="menuImageErr" class="text-danger"></span>
                           <label for="">Current Image</label>
