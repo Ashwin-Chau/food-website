@@ -404,7 +404,7 @@ if (!function_exists('getTotalPendingOrders')) {
         global $con;
         $query = "SELECT COUNT(id) AS pending_orders 
                   FROM orders 
-                  WHERE status IN ('0', '1')";
+                  WHERE status = 0 ";
         $stmt = mysqli_prepare($con, $query);
         if (!$stmt) {
             error_log('getPendingOrders prepare failed: ' . mysqli_error($con));

@@ -8,9 +8,14 @@
     list-style: none;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 body {
     padding-top: 40px; /* adjust based on actual navbar height */
 }
+
 
 .custom-alert {
     background-color: #d4edda;

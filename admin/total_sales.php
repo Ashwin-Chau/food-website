@@ -202,6 +202,9 @@ $popular_items = sortItems($popular_items, $item_sort, $item_order);
 
         <!-- Sales Overview -->
         <h3 class="mt-5 mb-3">Sales Overview</h3>
+        <div class="mb-4">
+            <canvas id="salesChart" height="100"></canvas>
+        </div>
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead class="table-dark">
@@ -243,6 +246,9 @@ $popular_items = sortItems($popular_items, $item_sort, $item_order);
 
         <!-- Popular Menu Items -->
         <h3 class="mt-5 mb-3">Popular Menu Items</h3>
+        <div class="mb-4">
+            <canvas id="popularItemsChart" height="100"></canvas>
+        </div>
         <div class="table-responsive" id="popular_menu">
             <table class="table table-hover table-bordered">
                 <thead class="table-dark">
@@ -290,6 +296,9 @@ $popular_items = sortItems($popular_items, $item_sort, $item_order);
 
         <!-- Order Times -->
         <h3 class="mt-5 mb-3">Order Times</h3>
+        <div class="mb-4">
+            <canvas id="orderTimesChart" height="100"></canvas>
+        </div>
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead class="table-dark">
@@ -317,6 +326,7 @@ $popular_items = sortItems($popular_items, $item_sort, $item_order);
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script>
         function updateDateInputs(filterType) {
             const startDateInput = document.getElementById('start_date');
@@ -361,6 +371,126 @@ $popular_items = sortItems($popular_items, $item_sort, $item_order);
             if (filterType) {
                 updateDateInputs(filterType);
             }
+
+            // Sales Overview Chart
+            const salesData = <?php echo json_encode($sales_data); ?>;
+            const salesChartCtx = document.getElementById('salesChart').getContext('2d');
+            new Chart(salesChartCtx, {
+                type: 'line',
+                data: {
+                    labels: salesData.map(item => item.period),
+                    datasets: [
+                        {
+                            label: 'Total Sales (Rs)',
+                            data: salesData.map(item => item.total_sales),
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            fill: true,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Order Count',
+                            data: salesData.map(item => item.order_count),
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            fill: true,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Total Sales (Rs)' },
+                            position: 'left'
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Order Count' },
+                            position: 'right',
+                            grid: { drawOnChartArea: false }
+                        },
+                        x: {
+                            title: { display: true, text: 'Period' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Sales Overview' }
+                    }
+                }
+            });
+
+            // Popular Menu Items Chart
+            const popularItems = <?php echo json_encode($popular_items); ?>;
+            const popularItemsChartCtx = document.getElementById('popularItemsChart').getContext('2d');
+            new Chart(popularItemsChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: popularItems.map(item => item.item_name),
+                    datasets: [{
+                        label: 'Quantity Sold',
+                        data: popularItems.map(item => item.quantity_sold),
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Quantity Sold' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Item Name' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Popular Menu Items' }
+                    }
+                }
+            });
+
+            // Order Times Chart
+            const orderTimes = <?php echo json_encode($order_times); ?>;
+            const orderTimesChartCtx = document.getElementById('orderTimesChart').getContext('2d');
+            new Chart(orderTimesChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: orderTimes.map(item => `${item.hour}:00`),
+                    datasets: [{
+                        label: 'Order Count',
+                        data: orderTimes.map(item => item.order_count),
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Order Count' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Hour' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Order Times' }
+                    }
+                }
+            });
         });
     </script>
     <?php include('includes/footer.php'); ?>

@@ -49,21 +49,34 @@ function validateEditUser() {
 //Validating records for Add Menu from admin dashboard
 //----------------------------------------------------------------------------------------------
 
+// function validateAddMenu() {
+//     var isCnameValid = cnameValidation('name', 'nameErr');
+//     var isSlugValid = slugValidation('slug', 'slugErr');
+//     // var isMtitleValid = mtitleValidation('meta_title', 'mtitleErr');
+    
+
+//     // Check if all validations pass
+//     if (isCnameValid && isSlugValid ) {
+//         // All validations passed, allow form submission
+//         return true;
+//     } else {
+//         // At least one validation failed, prevent form submission
+//         return false;
+//     }
+// }
 function validateAddMenu() {
     var isCnameValid = cnameValidation('name', 'nameErr');
     var isSlugValid = slugValidation('slug', 'slugErr');
-    var isMtitleValid = mtitleValidation('meta_title', 'mtitleErr');
-    
+    var isImageValid = imageValidation('menuImage', 'menuImageErr');
 
-    // Check if all validations pass
-    if (isCnameValid && isSlugValid  && isMtitleValid) {
-        // All validations passed, allow form submission
+    if (isCnameValid && isSlugValid && isImageValid) {
         return true;
     } else {
-        // At least one validation failed, prevent form submission
         return false;
     }
 }
+
+
 
 //----------------------------------------------------------------------------------------------
 //Validating records for Edit Menu from admin dashboard
@@ -72,11 +85,11 @@ function validateAddMenu() {
 function validateEditMenu() {
     var isCnameValid = cnameValidation('name', 'nameErr');
     var isSlugValid = slugValidation('slug', 'slugErr');
-    var isMtitleValid = mtitleValidation('meta_title', 'mtitleErr');
+    var isImageValid = imageValidation('menuImage', 'menuImageErr');
     
 
     // Check if all validations pass
-    if (isCnameValid && isSlugValid  && isMtitleValid) {
+    if (isCnameValid && isSlugValid  && isImageValid) {
         // All validations passed, allow form submission
         return true;
     } else {
@@ -93,11 +106,12 @@ function validateAddFoodItems() {
     var isPnameValid = pnameValidation('name', 'nameErr');
     var isSlugValid = slugValidation('slug', 'slugErr');
     var isOpriceValid = opriceValidation('original_price', 'opriceErr');
-    var isSpriceValid = spriceValidation('selling_price', 'spriceErr');
+    var isQuantityValid = quantityValidation('quantity', 'qtyErr');
+    var isImageValid = imageValidation('foodImage', 'foodImageErr');
     
 
     // Check if all validations pass
-    if (isPnameValid && isSlugValid  && isOpriceValid && isSpriceValid) {
+    if (isPnameValid && isSlugValid  && isOpriceValid && isQuantityValid && isImageValid) {
         // All validations passed, allow form submission
         return true;
     } else {
@@ -114,11 +128,12 @@ function validateEditFoodItems() {
     var isPnameValid = pnameValidation('name', 'nameErr');
     var isSlugValid = slugValidation('slug', 'slugErr');
     var isOpriceValid = opriceValidation('original_price', 'opriceErr');
-    var isSpriceValid = spriceValidation('selling_price', 'spriceErr');
+    var isQuantityValid = quantityValidation('quantity', 'qtyErr');
+    var isImageValid = imageValidation('foodImage', 'foodImageErr');
     
 
     // Check if all validations pass
-    if (isPnameValid && isSlugValid  && isOpriceValid && isSpriceValid) {
+    if (isPnameValid && isSlugValid  && isOpriceValid && isQuantityValid && isImageValid) {
         // All validations passed, allow form submission
         return true;
     } else {
@@ -179,10 +194,10 @@ function cnameValidation(inputId, errorId) {
     if (!nameRegex.test(name)) {
             
         if (name.length < 3) {
-            errorId.innerHTML = "Classes name is too short";
+            errorId.innerHTML = "Menu name is too short";
         }
         else {
-            errorId.innerHTML = "Invalid class name";
+            errorId.innerHTML = "Invalid menu name";
         }
         return false;
         
@@ -198,10 +213,10 @@ function pnameValidation(inputId, errorId) {
     if (!nameRegex.test(name)) {
             
         if (name.length < 4) {
-            errorId.innerHTML = "Packages name is too short";
+            errorId.innerHTML = "Food name is too short";
         }
         else {
-            errorId.innerHTML = "Invalid package name";
+            errorId.innerHTML = "Invalid food name";
         }
         return false;
         
@@ -259,15 +274,64 @@ function emailValidation(inputId, errorId) {
     return true;
 }
 
+// function opriceValidation(inputId, errorId) {
+//     var price = document.getElementById(inputId).value;
+//     var errorId = document.getElementById(errorId);
+//     errorId.innerHTML = "";
+//     const priceRegex = /^[0-9]+(\.[0-9]{1,2})?$/;
+//     if (!priceRegex.test(price)) {
+//         errorId.innerHTML = "Enter number only";
+//         return false;
+//     }
+//     return true;
+// }
 function opriceValidation(inputId, errorId) {
     var price = document.getElementById(inputId).value;
-    var errorId = document.getElementById(errorId);
-    errorId.innerHTML = "";
-    const priceRegex = /^[0-9]+(\.[0-9]{1,2})?$/;
-    if (!priceRegex.test(price)) {
-        errorId.innerHTML = "Enter number only";
+    var errorElement = document.getElementById(errorId);
+    errorElement.innerHTML = "";
+    
+    // Check for negative values first
+    if (price < 0) {
+        errorElement.innerHTML = "Price can't be less than 0";
         return false;
     }
+    
+    const priceRegex = /^[0-9]+(\.[0-9]{1,2})?$/;
+    if (!priceRegex.test(price)) {
+        errorElement.innerHTML = "Enter a valid number";
+        return false;
+    }
+    
+    if (parseFloat(price) <= 0) {
+        errorElement.innerHTML = "Price can't be less than 0";
+        return false;
+    }
+    
+    return true;
+}
+
+function quantityValidation(inputId, errorId) {
+    var price = document.getElementById(inputId).value;
+    var errorElement = document.getElementById(errorId);
+    errorElement.innerHTML = "";
+    
+    // Check for negative values first
+    if (price < 0) {
+        errorElement.innerHTML = "Quantity can't be less than 0";
+        return false;
+    }
+    
+    const priceRegex = /^[0-9]+(\.[0-9]{1,2})?$/;
+    if (!priceRegex.test(price)) {
+        errorElement.innerHTML = "Enter a valid number";
+        return false;
+    }
+    
+    if (parseFloat(price) <= 0) {
+        errorElement.innerHTML = "Quantity can't be less than 0";
+        return false;
+    }
+    
     return true;
 }
 
@@ -374,6 +438,32 @@ function validateMessage(inputId1, errorId) {
 }
 
 
+function imageValidation(inputId, errorId) {
+    var imageInput = document.getElementById(inputId);
+    var errorElement = document.getElementById(errorId);
+    errorElement.innerHTML = "";
+
+    if (imageInput.files.length === 0) {
+        errorElement.innerHTML = "Please upload an image.";
+        return false;
+    }
+
+    const file = imageInput.files[0];
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const maxSize = 2 * 1024 * 1024; // 2MB
+
+    if (!validTypes.includes(file.type)) {
+        errorElement.innerHTML = "Only JPG, PNG, GIF, or WEBP images are allowed.";
+        return false;
+    }
+
+    if (file.size > maxSize) {
+        errorElement.innerHTML = "Image size must be less than 2MB.";
+        return false;
+    }
+
+    return true;
+}
 
 
 

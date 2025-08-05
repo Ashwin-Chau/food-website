@@ -44,6 +44,7 @@ function fcfsSort($items) {
     return $items;
 }
 
+
 // Binary search function for string fields (configurable fields)
 function binarySearchItems($items, $search, $fields = ['name']) {
     $filtered_items = [];

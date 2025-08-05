@@ -60,10 +60,17 @@ include('includes/header.php');
                     <textarea rows="3" name="description" placeholder="Enter discription" class="form-control mb-2"></textarea>
                   </div>
 
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
                     <label for="" class="mb-0">Upload Image</label>
                     <input type="file" name="image" class="form-control">
+                  </div> -->
+                  <div class="col-md-6">
+                    <label for="image" class="mb-0">Upload Food Image</label>
+                    <input type="file" name="image" class="form-control" id="foodImage" 
+                    onblur="imageValidation('foodImage','foodImageErr')">
+                    <span id="foodImageErr" class="text-danger"></span>
                   </div>
+
 
                   <div class="col-md-6">
                     <label class="mb-0">Price</label>
@@ -78,8 +85,8 @@ include('includes/header.php');
                       <div class="col-md-6">
                         <label class="mb-0">Quantity</label>
                         <input type="number"  name="quantity" placeholder="Enter Quantity" class="form-control mb-2"  
-                        id="quantity">
-                        
+                        onblur="quantityValidation('quantity','qtyErr')" id="quantity">
+                        <span id="qtyErr" class="text-danger"></span>
                       </div>
 
                       <div class="col-md-3">

@@ -62,5 +62,6 @@ if (isset($_SESSION['message'])) {
         </div>
     </div>
     <script src="assets/js/validation.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>

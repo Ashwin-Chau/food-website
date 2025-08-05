@@ -24,7 +24,7 @@ $top_selling_item = getTopSellingItem();
                     <a href="users.php" class="text-decoration-none">
                         <div class="card bg-gradient-dark text-white p-3">
                             <i class="fas fa-users fa-2x mb-2"></i>
-                            <h5>Total Users</h5>
+                            <h5 class="text-white">Total Users</h5>
                             <p class="mb-0"><?php echo htmlspecialchars($total_users); ?></p>
                         </div>
                     </a>
@@ -33,7 +33,7 @@ $top_selling_item = getTopSellingItem();
                     <a href="menu.php" class="text-decoration-none">
                         <div class="card bg-gradient-dark text-white p-3">
                             <i class="fas fa-utensils fa-2x mb-2"></i>
-                            <h5>Total Menu</h5>
+                            <h5  class="text-white">Total Menu</h5>
                             <p class="mb-0"><?php echo htmlspecialchars($total_menus); ?></p>
                         </div>
                     </a>
@@ -42,7 +42,7 @@ $top_selling_item = getTopSellingItem();
                     <a href="food_items.php" class="text-decoration-none">
                         <div class="card bg-gradient-dark text-white p-3">
                             <i class="fas fa-hamburger fa-2x mb-2"></i>
-                            <h5>Total Food Items</h5>
+                            <h5  class="text-white">Total Food Items</h5>
                             <p class="mb-0"><?php echo htmlspecialchars($total_food_items); ?></p>
                         </div>
                     </a>
@@ -51,7 +51,7 @@ $top_selling_item = getTopSellingItem();
                     <a href="delivered.php" class="text-decoration-none">
                         <div class="card bg-gradient-dark text-white p-3">
                             <i class="fas fa-shopping-cart fa-2x mb-2"></i>
-                            <h5>Delivered Orders</h5>
+                            <h5  class="text-white">Delivered Orders</h5>
                             <p class="mb-0"><?php echo htmlspecialchars($total_orders); ?></p>
                         </div>
                     </a>
@@ -60,7 +60,7 @@ $top_selling_item = getTopSellingItem();
                     <a href="total_sales.php" class=" text-decoration-none">
                         <div class="card bg-gradient-dark text-white p-3">
                             <i class="fas fa-money-bill-wave fa-2x mb-2"></i>
-                            <h5>Total Revenue</h5>
+                            <h5  class="text-white">Total Revenue</h5>
                             <p class="mb-0">Rs <?php echo number_format($total_revenue, 2); ?></p>
                         </div>
                     </a>
@@ -69,7 +69,7 @@ $top_selling_item = getTopSellingItem();
                     <a href="orders.php" class="text-decoration-none">
                         <div class="card bg-gradient-dark text-white p-3">
                             <i class="fas fa-hourglass-half fa-2x mb-2"></i>
-                            <h5>Pending Orders</h5>
+                            <h5  class="text-white">Pending Orders</h5>
                             <p class="mb-0"><?php echo htmlspecialchars($pending_orders); ?></p>
                         </div>
                     </a>
@@ -78,7 +78,7 @@ $top_selling_item = getTopSellingItem();
                     <a href="total_sales.php#popular_menu" class="text-decoration-none">
                         <div class="card bg-gradient-dark text-white p-3">
                             <i class="fas fa-star fa-2x mb-2"></i>
-                            <h5>Top Selling Item</h5>
+                            <h5  class="text-white">Top Selling Item</h5>
                             <p class="mb-0"><?php echo htmlspecialchars($top_selling_item['name']) . ' (' . htmlspecialchars($top_selling_item['quantity']) . ')'; ?></p>
                         </div>
                     </a>

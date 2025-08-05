@@ -155,34 +155,37 @@ $data = mysqli_fetch_array($orderData);
                                 <?= htmlspecialchars($data['payment_mode']); ?>
                             </div>
                             <label class="fw-bold">Status</label>
-                            <label class="fw-bold">Status</label>
-<div class="mb-3">
-    <form action="code.php" method="POST">
-        <input type="hidden" name="order_no" value="<?= htmlspecialchars($data['order_no']); ?>">
-        <select name="order_status" id="order_status" class="form-select">
-            <?php
-            $current_status = $data['status'];
-            $statuses = [
-                0 => 'Under Process',
-                1 => 'Out for delivery',
-                2 => 'Delivered',
-                3 => 'Cancelled'
-            ];
-            // Only show current status and higher
-            foreach ($statuses as $value => $label) {
-                if ($value >= $current_status) {
-                    echo "<option value='$value' " . ($data['status'] == $value ? 'selected' : '') . ">$label</option>";
-                }
-            }
-            ?>
-        </select>
-        <div id="cancel_reason_div" style="display: <?= $data['status'] == 3 ? 'block' : 'none' ?>;">
-            <label class="fw-bold mt-2">Cancellation Reason</label>
-            <textarea name="cancel_reason" id="cancel_reason" class="form-control" placeholder="Enter reason for cancellation" <?= $data['status'] == 3 ? 'required' : '' ?>><?= htmlspecialchars($data['cancel_reason'] ?? ''); ?></textarea>
-        </div>
-        <button type="submit" name="update_order_btn" class="btn btn-primary mt-2">Update Status</button>
-    </form>
-</div>
+                            <div class="mb-3">
+                                <form action="code.php" method="POST">
+                                    <input type="hidden" name="order_no" value="<?= htmlspecialchars($data['order_no']); ?>">
+                                    <select name="order_status" id="order_status" class="form-select">
+                                        <?php
+                                        $current_status = $data['status'];
+                                        $statuses = [
+                                            0 => 'Under Process',
+                                            1 => 'Out for delivery',
+                                            2 => 'Delivered',
+                                            3 => 'Cancelled'
+                                        ];
+                                        // Ensure Cancelled is shown if current status is 3, otherwise exclude it if status >= 1
+                                        foreach ($statuses as $value => $label) {
+                                            if ($current_status == 3 && $value == 3) {
+                                                // Always show Cancelled if the order is already cancelled
+                                                echo "<option value='$value' selected>$label</option>";
+                                            } elseif ($value >= $current_status && !($value == 3 && $current_status >= 1)) {
+                                                // Show statuses >= current status, exclude Cancelled if status >= 1
+                                                echo "<option value='$value' " . ($data['status'] == $value ? 'selected' : '') . ">$label</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                    <div id="cancel_reason_div" style="display: <?= $data['status'] == 3 ? 'block' : 'none' ?>;">
+                                        <label class="fw-bold mt-2">Cancellation Reason</label>
+                                        <textarea name="cancel_reason" id="cancel_reason" class="form-control" placeholder="Enter reason for cancellation" <?= $data['status'] == 3 ? 'required' : '' ?>><?= htmlspecialchars($data['cancel_reason'] ?? ''); ?></textarea>
+                                    </div>
+                                    <button type="submit" name="update_order_btn" class="btn btn-primary mt-2">Update Status</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -193,24 +196,24 @@ $data = mysqli_fetch_array($orderData);
 
 <script>
     document.getElementById('order_status').addEventListener('change', function() {
-    var reasonDiv = document.getElementById('cancel_reason_div');
-    var reasonInput = document.getElementById('cancel_reason');
-    if (this.value === '3') {
-        reasonDiv.style.display = 'block';
-        reasonInput.setAttribute('required', 'required');
-    } else {
-        reasonDiv.style.display = 'none';
-        reasonInput.removeAttribute('required');
-    }
-
-    // Confirm status reversion
-    var currentStatus = <?= json_encode($data['status']); ?>;
-    if (this.value < currentStatus) {
-        if (!confirm('Are you sure you want to revert to a previous status? This may affect order tracking.')) {
-            this.value = currentStatus; // Revert selection
+        var reasonDiv = document.getElementById('cancel_reason_div');
+        var reasonInput = document.getElementById('cancel_reason');
+        if (this.value === '3') {
+            reasonDiv.style.display = 'block';
+            reasonInput.setAttribute('required', 'required');
+        } else {
+            reasonDiv.style.display = 'none';
+            reasonInput.removeAttribute('required');
         }
-    }
-});
+
+        // Confirm status reversion
+        var currentStatus = <?= json_encode($data['status']); ?>;
+        if (this.value < currentStatus) {
+            if (!confirm('Are you sure you want to revert to a previous status? This may affect order tracking.')) {
+                this.value = currentStatus; // Revert selection
+            }
+        }
+    });
 </script>
 
 <?php include('includes/footer.php'); ?>

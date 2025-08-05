@@ -28,8 +28,10 @@ include('includes/header.php');
                     <textarea rows="3" name="description" placeholder="Enter description" class="form-control"></textarea>
                   </div>
                   <div class="col-md-12">
-                    <label for="image">Upload Image</label>
-                    <input type="file" name="image" class="form-control">
+                    <label for="image" class="mb-0">Upload Menu Image</label>
+                    <input type="file" name="image" class="form-control" id="menuImage"
+                    onblur="imageValidation('menuImage','menuImageErr')">
+                    <span id="menuImageErr" class="text-danger"></span>
                   </div>
                   <div class="col-md-6">
                     <label for="status">Status</label>
