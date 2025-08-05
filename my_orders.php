@@ -94,51 +94,7 @@ $filtered_items = sortItems($filtered_items, $sort, $order);
                     <?= htmlspecialchars($error) ?>
                 </div>
             <?php } ?>
-            <!-- Combined Search and Date Range Form -->
-            <!-- <div class="form-container">
-                <form method="GET"> -->
-                    <!-- <div class="search-line"> -->
-                        <!-- <div class="form-group">
-                            <label for="search">Search by ID</label>
-                            <input type="text" name="search" id="search" 
-                                   placeholder="Enter order ID" 
-                                   value="<?= htmlspecialchars($search) ?>">
-                        </div>
-                        <button type="submit" class="btn btn-search">
-                            <i class="fas fa-search"></i> Search
-                        </button>
-                        <button type="button" class="btn btn-clear" 
-                                onclick="window.location.href='?sort=<?= htmlspecialchars($sort) ?>&order=<?= htmlspecialchars($order) ?>&start_date=<?= htmlspecialchars($start_date) ?>&end_date=<?= htmlspecialchars($end_date) ?>'">
-                            <i class="fas fa-eraser"></i> Clear Search
-                        </button>
-                        <button type="button" class="btn btn-reset" 
-                                onclick="window.location.href='?sort=created_at&order=DESC'">
-                            <i class="fas fa-sync-alt"></i> Reset
-                        </button>
-                    </div>
-                    <div class="date-range-line">
-                        <div class="form-group">
-                            <label for="start_date">Start Date</label>
-                            <input type="date" name="start_date" id="start_date" 
-                                   value="<?= htmlspecialchars($start_date) ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="end_date">End Date</label>
-                            <input type="date" name="end_date" id="end_date" 
-                                   value="<?= htmlspecialchars($end_date) ?>">
-                        </div>
-                        <button type="submit" class="btn btn-filter">
-                            <i class="fas fa-filter"></i> Filter
-                        </button>
-                        <button type="button" class="btn btn-clear" 
-                                onclick="window.location.href='?search=<?= htmlspecialchars($search) ?>&sort=<?= htmlspecialchars($sort) ?>&order=<?= htmlspecialchars($order) ?>'">
-                            <i class="fas fa-calendar-times"></i> Clear Dates
-                        </button>
-                    </div> -->
-                    <!-- <input type="hidden" name="sort" value="<?= htmlspecialchars($sort) ?>">
-                    <input type="hidden" name="order" value="<?= htmlspecialchars($order) ?>">
-                </form> -->
-            <!-- </div> -->
+            
             <div class="table-container">
                 <table class="table">
                     <thead>

@@ -85,7 +85,7 @@ function validateAddMenu() {
 function validateEditMenu() {
     var isCnameValid = cnameValidation('name', 'nameErr');
     var isSlugValid = slugValidation('slug', 'slugErr');
-    var isImageValid = imageValidation('menuImage', 'menuImageErr');
+    var isImageValid = imageValidation('menuImage', 'menuImageErr', 'old_image');
     
 
     // Check if all validations pass
@@ -129,7 +129,7 @@ function validateEditFoodItems() {
     var isSlugValid = slugValidation('slug', 'slugErr');
     var isOpriceValid = opriceValidation('original_price', 'opriceErr');
     var isQuantityValid = quantityValidation('quantity', 'qtyErr');
-    var isImageValid = imageValidation('foodImage', 'foodImageErr');
+    var isImageValid = imageValidation('foodImage', 'foodImageErr', 'old_image');
     
 
     // Check if all validations pass
@@ -438,27 +438,37 @@ function validateMessage(inputId1, errorId) {
 }
 
 
-function imageValidation(inputId, errorId) {
-    var imageInput = document.getElementById(inputId);
-    var errorElement = document.getElementById(errorId);
-    errorElement.innerHTML = "";
+function imageValidation(inputId, errorId, oldImageId) {
+    const fileInput = document.getElementById(inputId);
+    const errorElement = document.getElementById(errorId);
+    const oldImageInput = document.getElementById(oldImageId);
+    const oldImageValue = oldImageInput ? oldImageInput.value : '';
 
-    if (imageInput.files.length === 0) {
-        errorElement.innerHTML = "Please upload an image.";
-        return false;
+    // Clear previous error
+    errorElement.textContent = '';
+
+    // If no file is selected and an old image exists, skip validation
+    if (!fileInput.files || fileInput.files.length === 0) {
+        if (oldImageValue.trim() !== '') {
+            return true; // Valid: No new image selected, but old image exists
+        } else {
+            errorElement.textContent = 'Please upload an image.';
+            return false; // Invalid: No new image and no old image
+        }
     }
 
-    const file = imageInput.files[0];
-    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    const maxSize = 2 * 1024 * 1024; // 2MB
+    // Validate the selected file
+    const file = fileInput.files[0];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const maxSize = 2 * 1024 * 1024; // 2MB in bytes
 
-    if (!validTypes.includes(file.type)) {
-        errorElement.innerHTML = "Only JPG, PNG, GIF, or WEBP images are allowed.";
+    if (!allowedTypes.includes(file.type)) {
+        errorElement.textContent = 'Invalid file type. Please upload a JPEG, PNG, or GIF image.';
         return false;
     }
 
     if (file.size > maxSize) {
-        errorElement.innerHTML = "Image size must be less than 2MB.";
+        errorElement.textContent = 'File size exceeds 2MB. Please upload a smaller image.';
         return false;
     }
 

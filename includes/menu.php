@@ -31,4 +31,36 @@
         ?>
     </div>
 </div>
+<script>
+    const scrollContainer = document.querySelector('.explore-menu-list');
+
+scrollContainer.addEventListener('wheel', (e) => {
+    if (e.deltaY !== 0) {
+        e.preventDefault();
+        scrollContainer.scrollLeft += e.deltaY;
+    }
+});
+
+const scrollContainer = document.querySelector('.explore-menu-list');
+let scrollSpeed = 1; // Adjust speed here
+let scrollInterval;
+
+function autoScroll() {
+    scrollInterval = setInterval(() => {
+        scrollContainer.scrollLeft += scrollSpeed;
+
+        // Loop back to start when reaching the end
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+            scrollContainer.scrollLeft = 0;
+        }
+    }, 20); // Adjust interval for smoother/faster scrolling
+}
+
+autoScroll();
+
+// Optional: pause scroll on hover
+scrollContainer.addEventListener('mouseenter', () => clearInterval(scrollInterval));
+scrollContainer.addEventListener('mouseleave', autoScroll);
+</script>
+
 <hr>

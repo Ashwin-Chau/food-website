@@ -51,13 +51,17 @@ include('includes/header.php');
                       </div>
 
                       <div class="col-md-12">
-                        <label for="image" class="mb-0">Upload Menu Image</label>
-                        <input type="file" name="image" class="form-control" id="menuImage"
-                          onblur="imageValidation('menuImage','menuImageErr')">
-                        <span id="menuImageErr" class="text-danger"></span>
-                        <label for="">Current Image</label>
-                        <input type="hidden" name="old_image" value="<?= $data['image'] ?>">
-                        <img src="../uploads/<?= $data['image'] ?>" height="50px" width="50px" alt="">
+                        <label for="image" class="mb-0">Upload Food Image</label>
+                          <input type="file" name="image" class="form-control" id="foodImage" 
+                            onblur="imageValidation('menuImage', 'menuImageErr', 'old_image')">
+                          <span id="menuImageErr" class="text-danger"></span>
+                          <label for="">Current Image</label>
+                          <input type="hidden" name="old_image" id="old_image" value="<?= htmlspecialchars($data['image']) ?>">
+                          <?php if (!empty($data['image'])) { ?>
+                            <img src="../uploads/<?= htmlspecialchars($data['image']) ?>" height="50px" width="50px" alt="Current Image">
+                          <?php } else { ?>
+                            <p>No current image</p>
+                          <?php } ?>
                       </div>
 
                       <!-- <div class="col-md-12">

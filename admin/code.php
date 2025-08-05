@@ -439,12 +439,13 @@ if (isset($_POST['update_order_btn'])) {
     }
 
     // Check if order exists
-    $order_query = "SELECT status FROM orders WHERE order_no='$order_no'";
+    $order_query = "SELECT id, status FROM orders WHERE order_no='$order_no'";
     $order_result = mysqli_query($con, $order_query);
 
     if (mysqli_num_rows($order_result) > 0) {
         $order_data = mysqli_fetch_array($order_result);
         $current_status = $order_data['status'];
+        $order_id = $order_data['id'];
 
         // Prevent reversion to lower status
         if ($order_status < $current_status) {
@@ -452,10 +453,28 @@ if (isset($_POST['update_order_btn'])) {
             exit();
         }
 
-        // Handle cancel reason
+        // If cancelling, reason is required
         if ($order_status == '3' && empty($cancel_reason)) {
             redirect("view_order.php?o=$order_no", "Cancellation reason is required");
             exit();
+        }
+
+        // If cancelling and not already cancelled
+        if ($order_status == '3' && $current_status != '3') {
+            // Fetch order items
+            $items_query = "SELECT food_items_id, quantity FROM order_items WHERE order_id='$order_id'";
+            $items_result = mysqli_query($con, $items_query);
+
+            if (mysqli_num_rows($items_result) > 0) {
+                while ($item = mysqli_fetch_assoc($items_result)) {
+                    $food_item_id = $item['food_items_id'];
+                    $ordered_qty = $item['quantity'];
+
+                    // Update stock in food_items
+                    $update_stock_query = "UPDATE food_items SET quantity = quantity + $ordered_qty WHERE id = '$food_item_id'";
+                    mysqli_query($con, $update_stock_query);
+                }
+            }
         }
 
         // Build update query

@@ -328,7 +328,6 @@ elseif (isset($_POST['order_id'], $_POST['cancel_reason'])) {
 
     $order_id = mysqli_real_escape_string($con, $_POST['order_id']);
     $cancel_reason = mysqli_real_escape_string($con, $_POST['cancel_reason']);
-    $order_no = isset($_GET['o']) ? mysqli_real_escape_string($con, $_GET['o']) : '';
     $customer_id = $_SESSION['auth_user']['user_id'];
 
     // Verify the order belongs to the user and is in Under Process status
@@ -336,6 +335,21 @@ elseif (isset($_POST['order_id'], $_POST['cancel_reason'])) {
     $result = mysqli_query($con, $query);
 
     if (mysqli_num_rows($result) > 0) {
+        // Restore stock from order_items to food_items
+        $items_query = "SELECT food_items_id, quantity FROM order_items WHERE order_id = '$order_id'";
+        $items_result = mysqli_query($con, $items_query);
+
+        if (mysqli_num_rows($items_result) > 0) {
+            while ($item = mysqli_fetch_assoc($items_result)) {
+                $food_item_id = $item['food_items_id'];
+                $ordered_qty = $item['quantity'];
+
+                // Update food_items stock
+                $update_stock_query = "UPDATE food_items SET quantity = quantity + $ordered_qty WHERE id = '$food_item_id'";
+                mysqli_query($con, $update_stock_query);
+            }
+        }
+
         // Update order status to Cancelled (3) and save cancellation reason
         $update_query = "UPDATE orders SET status = '3', cancel_reason = '$cancel_reason' WHERE id = '$order_id'";
         if (mysqli_query($con, $update_query)) {
@@ -347,4 +361,5 @@ elseif (isset($_POST['order_id'], $_POST['cancel_reason'])) {
         redirect("../my_orders.php", "Order not found or not cancellable");
     }
 }
+
 ?>
