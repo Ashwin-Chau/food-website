@@ -419,10 +419,14 @@ try {
                                 <div class="detail-box"><?= htmlspecialchars($order_time); ?></div>
                             </div>
                         </div>
-                        <div class="detail-row single">
+                        <div class="detail-row">
                             <div class="detail-item">
                                 <label>Cancel Reason</label>
                                 <div class="detail-box"><?= htmlspecialchars($data['cancel_reason'] ?: 'N/A'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Payment Id</label>
+                                <div class="detail-box"><?= htmlspecialchars($data['payment_id']); ?></div>
                             </div>
                         </div>
                         <div class="detail-row single">

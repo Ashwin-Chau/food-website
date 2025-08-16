@@ -92,10 +92,16 @@ $data = mysqli_fetch_array($orderData);
                                         <?= htmlspecialchars($time); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-2">
+                                <div class="col-md-6 mb-2">
                                     <label class="fw-bold">Notes</label>
                                     <div class="border p-1">
                                         <?= htmlspecialchars($data['notes'] ?: 'N/A'); ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="fw-bold">Payment Id</label>
+                                    <div class="border p-1">
+                                        <?= htmlspecialchars($data['payment_id'] ?: 'N/A'); ?>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-2">

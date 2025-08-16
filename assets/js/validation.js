@@ -68,7 +68,7 @@ function validateChangePassword() {
 function validateCheckout() {
     var isNameValid = nameValidation('name', 'nameErr');
     var isEmailValid = emailValidation('email', 'emailErr');
-    var isContactValid = contactValidation('contact', 'contactErr');
+    var isContactValid = contactValidation('phone', 'phoneErr');
     var isAddressValid = addressValidation('address', 'addressErr');
 
     // Check if all validations pass

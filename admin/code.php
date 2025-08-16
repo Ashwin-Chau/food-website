@@ -214,33 +214,63 @@ else if(isset($_POST['update_menu_btn']))
 }
 
 // delete menu
-else if(isset($_POST['delete_menu_btn']))
-{
-    $menu_id = mysqli_real_escape_string($con, $_POST['menu_id']);
+// else if(isset($_POST['delete_menu_btn']))
+// {
+//     $menu_id = mysqli_real_escape_string($con, $_POST['menu_id']);
 
-    $menu_query = "SELECT * FROM menu WHERE id='$menu_id' ";
+//     $menu_query = "SELECT * FROM menu WHERE id='$menu_id' ";
+//     $menu_query_run = mysqli_query($con, $menu_query);
+//     $menu_data = mysqli_fetch_array($menu_query_run);
+//     $image = $menu_data['image'];
+
+//     $delete_query = "DELETE FROM menu WHERE id='$menu_id' ";
+//     $delete_query_run = mysqli_query($con, $delete_query);
+
+//     if($delete_query_run)
+//     {
+//         if(file_exists("../uploads/".$image))
+//             {
+//                 unlink("../uploads/".$image);
+//             }
+//         // redirect("classes.php", "Classes deleted Successfully");
+//         echo 301;
+//     }
+//     else
+//     {
+//         // redirect("classes.php", "Something went wrong");
+//         echo 500;
+//     }
+// }
+if(isset($_POST['delete_menu_btn'])) {
+    $menu_id = mysqli_real_escape_string($con, $_POST['menu_id']);
+    echo "Deleting menu ID: $menu_id\n";
+
+    $menu_query = "SELECT * FROM menu WHERE id='$menu_id'";
     $menu_query_run = mysqli_query($con, $menu_query);
+    if (!$menu_query_run || mysqli_num_rows($menu_query_run) == 0) {
+        echo "Menu not found or query failed";
+        exit;
+    }
+
     $menu_data = mysqli_fetch_array($menu_query_run);
     $image = $menu_data['image'];
 
-    $delete_query = "DELETE FROM menu WHERE id='$menu_id' ";
+    $delete_query = "DELETE FROM menu WHERE id='$menu_id'";
     $delete_query_run = mysqli_query($con, $delete_query);
 
-    if($delete_query_run)
-    {
-        if(file_exists("../uploads/".$image))
-            {
-                unlink("../uploads/".$image);
+    if($delete_query_run) {
+        if(file_exists("../uploads/".$image)) {
+            if (!unlink("../uploads/".$image)) {
+                echo "Could not delete image: ".$image;
+                exit;
             }
-        // redirect("classes.php", "Classes deleted Successfully");
+        }
         echo 301;
-    }
-    else
-    {
-        // redirect("classes.php", "Something went wrong");
-        echo 500;
+    } else {
+        echo mysqli_error($con);
     }
 }
+
 
 
 

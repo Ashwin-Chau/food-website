@@ -195,6 +195,7 @@ $statusText = isset($data['status']) && array_key_exists($data['status'], $statu
             </table>
             <div class="total-price">Total Price: Rs <?= htmlspecialchars($data['total_price']); ?></div>
             <div class="payment-mode"><strong>Payment Mode:</strong> <?= htmlspecialchars($data['payment_mode']); ?></div>
+            <div class="payment-mode"><strong>Payment Id:</strong> <?= htmlspecialchars($data['payment_id']); ?></div>
             <div class="status-box"><strong>Status:</strong> <?= htmlspecialchars($statusText); ?></div>
         </div>
         <div class="no-print">

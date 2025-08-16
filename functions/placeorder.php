@@ -12,6 +12,7 @@ if (isset($_SESSION['auth'])) {
         $zipcode = mysqli_real_escape_string($con, $_POST['zipcode']);
         $address = mysqli_real_escape_string($con, $_POST['address']);
         $payment_mode = mysqli_real_escape_string($con, $_POST['payment_mode']);
+        $payment_id = mysqli_real_escape_string($con, $_POST['payment_id']);
         $notes = isset($_POST['notes']) ? mysqli_real_escape_string($con, $_POST['notes']) : NULL;
 
         if ($name == "" || $email == "" || $phone == "" || $zipcode == "" || $address == "") {
@@ -31,8 +32,8 @@ if (isset($_SESSION['auth'])) {
         }
 
         $order_no = "foodhub" . rand(11, 99) . substr($phone, 2);
-        $insert_query = "INSERT INTO orders (order_no, customer_id, name, email, phone, zipcode, address, total_price, payment_mode, notes) VALUES
-            ('$order_no', '$customer_id', '$name', '$email', '$phone', '$zipcode', '$address', '$totalPrice', '$payment_mode', '$notes')";
+        $insert_query = "INSERT INTO orders (order_no, customer_id, name, email, phone, zipcode, address, total_price, payment_mode, payment_id, notes) VALUES
+            ('$order_no', '$customer_id', '$name', '$email', '$phone', '$zipcode', '$address', '$totalPrice', '$payment_mode', '$payment_id', '$notes')";
         $insert_query_run = mysqli_query($con, $insert_query);
 
         if ($insert_query_run) {
@@ -56,9 +57,14 @@ if (isset($_SESSION['auth'])) {
             $deleteCartQuery = "DELETE FROM carts WHERE customer_id='$customer_id'";
             $deleteCartQuery_run = mysqli_query($con, $deleteCartQuery);
 
-            $_SESSION['message'] = "Order placed successfully";
-            header('Location: ../my_orders.php');
-            die();
+            if($payment_mode == "COD")
+            {
+                $_SESSION['message'] = "Order placed successfully";
+                header('Location: ../my_orders.php');
+                die();
+            } else{
+                echo 201;
+            }
         }
     }
 } else {
