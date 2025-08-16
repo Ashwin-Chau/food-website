@@ -4,6 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 include('../config/dbcon.php');
 include('myfunctions.php');
+include('algorithm.php');
 
 require_once __DIR__ . '/../init.php';
 
@@ -21,10 +22,10 @@ if (isset($_POST['register_btn'])) {
 
     if ($password == $cpassword) {
         // Generate OTP
-        $otp = rand(100000, 999999);
+        $otp = generateCustomOTP();
 
         // Hash password
-        $hashedPassword = password_hash($password, PASSWORD_ARGON2I);
+        $hashedPassword = customHashPassword($password);
 
         // Check if email already registered
         $check_email_query = $con->prepare("SELECT email, status FROM customer WHERE email = ?");
@@ -105,7 +106,7 @@ elseif (isset($_POST['forgot_password_btn'])) {
             redirect("../forgot_password.php", "Account not verified. Please register and verify.");
         } else {
             // Generate OTP
-            $otp = rand(100000, 999999);
+            $otp = generateCustomOTP();
 
             // Send OTP email
             $to = $email;
@@ -192,7 +193,7 @@ elseif (isset($_GET['resend_otp'])) {
     $otp_type = $_SESSION['otp_type'] ?? 'register';
 
     // Generate new OTP
-    $new_otp = rand(100000, 999999);
+    $new_otp = generateCustomOTP();
 
     // Update OTP in database
     $update_query = $con->prepare("UPDATE customer SET otp = ? WHERE email = ?");
@@ -225,7 +226,7 @@ elseif (isset($_POST['reset_password_btn'])) {
     $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
 
     if ($password == $cpassword) {
-        $hashedPassword = password_hash($password, PASSWORD_ARGON2I);
+        $hashedPassword = customHashPassword($password);
         $update_query = $con->prepare("UPDATE customer SET password = ? WHERE email = ?");
         $update_query->bind_param("ss", $hashedPassword, $email);
         if ($update_query->execute()) {
@@ -254,9 +255,9 @@ elseif (isset($_POST['change_password_btn'])) {
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
-        if (password_verify($current_password, $user['password'])) {
+        if (verifyCustomPassword($current_password, $user['password'])) {
             if ($new_password == $confirm_password) {
-                $hashedPassword = password_hash($new_password, PASSWORD_ARGON2I);
+                $hashedPassword = customHashPassword($new_password);
                 $update_query = $con->prepare("UPDATE customer SET password = ? WHERE email = ?");
                 $update_query->bind_param("ss", $hashedPassword, $email);
                 if ($update_query->execute()) {
@@ -289,7 +290,7 @@ elseif (isset($_POST['login_btn'])) {
 
     if ($login_query_run->num_rows > 0) {
         $userdata = $login_query_run->fetch_assoc();
-        if (password_verify($password, $userdata['password'])) {
+        if (verifyCustomPassword($password, $userdata['password'])) {
             $_SESSION['auth'] = true;
 
             $userid = $userdata['id'];
@@ -361,5 +362,4 @@ elseif (isset($_POST['order_id'], $_POST['cancel_reason'])) {
         redirect("../my_orders.php", "Order not found or not cancellable");
     }
 }
-
 ?>

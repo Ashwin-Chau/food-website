@@ -1,4 +1,85 @@
 <?php
+
+// Custom OTP generation algorithm
+function generateCustomOTP() {
+    try {
+        // Combine timestamp and random bytes for entropy
+        $timestamp = microtime(true);
+        $randomSeed = bin2hex(random_bytes(16));
+        $data = $timestamp . $randomSeed;
+
+        // Generate a SHA-256 hash
+        $hash = hash('sha256', $data);
+
+        // Convert first 8 characters of hash to a number and ensure 6-digit OTP
+        $number = hexdec(substr($hash, 0, 8));
+        $otp = ($number % 900000) + 100000; // Ensures 100000–999999 range
+
+        return str_pad($otp, 6, '0', STR_PAD_LEFT);
+    } catch (Exception $e) {
+        // Fallback to mt_rand if random_bytes fails
+        return str_pad(mt_rand(100000, 999999), 6, '0', STR_PAD_LEFT);
+    }
+}
+
+
+
+// Custom password hashing algorithm
+function customHashPassword($password) {
+    try {
+        // Generate a random 16-byte salt
+        $salt = random_bytes(16);
+        $iterations = 10000; // Number of hashing iterations
+        $data = $password . bin2hex($salt);
+
+        // Perform multiple iterations of SHA-256 hashing
+        $hash = $data;
+        for ($i = 0; $i < $iterations; $i++) {
+            $hash = hash('sha256', $hash, true);
+        }
+
+        // Combine salt and hash, encode as base64 for storage
+        return base64_encode($salt . $hash);
+    } catch (Exception $e) {
+        // Fallback to a simpler hash if random_bytes fails
+        $salt = substr(md5(uniqid(mt_rand(), true)), 0, 16);
+        $hash = $password . $salt;
+        for ($i = 0; $i < 10000; $i++) {
+            $hash = hash('sha256', $hash, true);
+        }
+        return base64_encode($salt . $hash);
+    }
+}
+
+// Custom password verification function
+function verifyCustomPassword($password, $storedHash) {
+    try {
+        // Decode stored hash
+        $decoded = base64_decode($storedHash);
+        if ($decoded === false) {
+            return false;
+        }
+
+        // Extract salt (first 16 bytes) and hash (remaining bytes)
+        $salt = substr($decoded, 0, 16);
+        $originalHash = substr($decoded, 16);
+        $iterations = 10000;
+
+        // Recompute hash with provided password and stored salt
+        $data = $password . bin2hex($salt);
+        $computedHash = $data;
+        for ($i = 0; $i < $iterations; $i++) {
+            $computedHash = hash('sha256', $computedHash, true);
+        }
+
+        // Compare hashes
+        return hash_equals($originalHash, $computedHash);
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+
 // Sorting function (supports user-specified columns)
 function sortItems($items, $sort, $order) {
     usort($items, function($a, $b) use ($sort, $order) {
@@ -156,4 +237,10 @@ function binarySearchItemsById($items, $search) {
 
     return [];
 }
+
+
+
+
+
+
 ?>
