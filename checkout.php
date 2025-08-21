@@ -174,7 +174,7 @@ $customer = getCustomerDetails($con); // Pass the database connection
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: '0.2'//'<?= $totalPrice ?>' // Pass the total price dynamically
+                        value: '<?= $totalPrice ?>' // Pass the total price dynamically
                     }
                 }]
             });

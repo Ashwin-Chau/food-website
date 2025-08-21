@@ -453,4 +453,49 @@ if (!function_exists('getTopSellingItem')) {
         return $row ? ['name' => $row['item_name'], 'quantity' => $row['quantity_sold']] : ['name' => 'None', 'quantity' => 0];
     }
 }
+
+
+if (!function_exists('getUserRegistrations')) {
+    function getUserRegistrations($start_date = '', $end_date = '') {
+        global $con;
+        $query = "SELECT DATE(created_at) AS period, COUNT(*) AS registration_count 
+                  FROM customer 
+                  WHERE 1=1";
+        if ($start_date && $end_date) {
+            $query .= " AND created_at BETWEEN ? AND ?";
+        }
+        $query .= " GROUP BY DATE(created_at) ORDER BY period DESC";
+        $stmt = mysqli_prepare($con, $query);
+        if ($start_date && $end_date) {
+            $end_date_end = $end_date . ' 23:59:59';
+            mysqli_stmt_bind_param($stmt, 'ss', $start_date, $end_date_end);
+        }
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if ($result === false) {
+            error_log("getUserRegistrations query failed: " . mysqli_error($con));
+            mysqli_stmt_close($stmt);
+            return false;
+        }
+        mysqli_stmt_close($stmt);
+        return $result;
+    }
+}
+
+if (!function_exists('sortItem')) {
+    function sortItem($items, $sort_key, $sort_order) {
+        usort($items, function ($a, $b) use ($sort_key, $sort_order) {
+            if ($sort_key == 'period') {
+                $result = strcmp($a[$sort_key], $b[$sort_key]);
+            } else {
+                $result = $a[$sort_key] <=> $b[$sort_key];
+            }
+            return $sort_order === 'ASC' ? $result : -$result;
+        });
+        return $items;
+    }
+}
+
+
+
 ?>

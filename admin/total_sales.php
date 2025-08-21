@@ -247,7 +247,7 @@ $popular_items = sortItems($popular_items, $item_sort, $item_order);
         <!-- Popular Menu Items -->
         <h3 class="mt-5 mb-3">Popular Menu Items</h3>
         <div class="mb-4">
-            <canvas id="popularItemsChart" height="100"></canvas>
+            <canvas id="popularItemsChart" height="500"></canvas>
         </div>
         <div class="table-responsive" id="popular_menu">
             <table class="table table-hover table-bordered">
@@ -428,32 +428,43 @@ $popular_items = sortItems($popular_items, $item_sort, $item_order);
             const popularItems = <?php echo json_encode($popular_items); ?>;
             const popularItemsChartCtx = document.getElementById('popularItemsChart').getContext('2d');
             new Chart(popularItemsChartCtx, {
-                type: 'bar',
+                type: 'pie',
                 data: {
                     labels: popularItems.map(item => item.item_name),
                     datasets: [{
                         label: 'Quantity Sold',
                         data: popularItems.map(item => item.quantity_sold),
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
                         borderWidth: 1
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'Quantity Sold' }
-                        },
-                        x: {
-                            title: { display: true, text: 'Item Name' }
-                        }
-                    },
+                    maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: true },
-                        title: { display: true, text: 'Popular Menu Items' }
+                        legend: { 
+                            display: true,
+                            position: 'right'
+                        },
+                        title: { 
+                            display: true, 
+                            text: 'Popular Menu Items' 
+                        }
                     }
                 }
             });
